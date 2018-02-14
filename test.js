@@ -1,0 +1,69 @@
+let test = require('tape');
+
+let tap = require('./index');
+
+test('it taps data with the given operation', t => {
+  let history = [];
+  const report = (name,dir,t,d) => t !== 0 && history.push([name,dir,t,d]);
+
+  const source = makeMockCallbag('source', true);
+  const middle = tap(v => history.push(['tap', v]));
+  const sink = makeMockCallbag('sink', report);
+
+  middle(source)(0, sink);
+
+  source.emit(1, 'foo');
+  source.emit(1, 'bar');
+  source.emit(2, 'error');
+
+  t.deepEqual(history, [
+    ['tap', 'foo'],
+    ['sink', 'fromUp', 1, 'foo'],
+    ['tap', 'bar'],
+    ['sink', 'fromUp', 1, 'bar'],
+    ['sink', 'fromUp', 2, 'error'],
+  ], 'tap taps the data and passes everything through');
+
+  t.end();
+});
+
+test('it passes requests back up', t => {
+  let history = [];
+  const report = (name,dir,t,d) => t !== 0 && history.push([name,dir,t,d]);
+
+  const source = makeMockCallbag('source', report, true);
+  const middle = tap(v => history.push(['tap', v]));
+  const sink = makeMockCallbag('sink', report);
+
+  middle(source)(0, sink);
+
+  sink.emit(1);
+  sink.emit(2);
+
+  t.deepEqual(history, [
+    ['source', 'fromDown', 1, undefined],
+    ['source', 'fromDown', 2, undefined],
+  ], 'source gets requests from sink');
+
+  t.end();
+});
+
+function makeMockCallbag(name, report=()=>{}, isSource) {
+  if (report === true) {
+    isSource = true;
+    report = ()=>{};
+  }
+  let talkback;
+  let mock = (t, d) => {
+    report(name, 'fromUp', t, d);
+    if (t === 0){
+      talkback = d;
+      if (isSource) talkback(0, (st, sd) => report(name, 'fromDown', st, sd));
+    }
+  };
+  mock.emit = (t, d) => {
+    if (!talkback) throw new Error(`Can't emit from ${name} before anyone has connected`);
+    talkback(t, d);
+  };
+  return mock;
+}

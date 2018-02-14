@@ -1,0 +1,21 @@
+{
+  "name": "callbag-tap",
+  "version": "1.0.0",
+  "description": "Callbag operator that taps the source with the given function, but otherwise is a noop",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krawaller/callbag-tap.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "author": "David Waller",
+  "license": "MIT",
+  "keywords": [
+    "callbag"
+  ],
+  "devDependencies": {
+    "tape": "^4.8.0"
+  }
+}
