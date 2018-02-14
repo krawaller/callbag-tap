@@ -1,6 +1,6 @@
 {
   "name": "callbag-tap",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Callbag operator that taps the source with the given function, but otherwise is a noop",
   "repository": {
     "type": "git",
