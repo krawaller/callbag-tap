@@ -2,7 +2,7 @@
 
 [Callbag](https://github.com/callbag/callbag) operator that taps the source with the given function, but otherwise acts as a noop.
 
-Therefore it is not the same as [forEach](https://github.com/staltz/callbag-for-each) which is a sink (that actively consumes iterable sources).
+Therefore it is not the same as [forEach](https://github.com/staltz/callbag-for-each) which is a sink (that actively consumes sources).
 
 `npm install callbag-tap`
 
