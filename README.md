@@ -6,6 +6,12 @@ Therefore it is not the same as [forEach](https://github.com/staltz/callbag-for-
 
 `npm install callbag-tap`
 
+You can tap data, error and completion respectively:
+
+```js
+const tapped = tap(dataTapFunc, errorTapFunc, completionTapFunc)(source);
+```
+
 ## example
 
 ```js
