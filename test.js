@@ -68,10 +68,7 @@ test('it taps completion with the given operation', t => {
 });
 
 test('it passes requests back up', t => {
-  let history = [];
-  const report = (t,d) => t !== 0 && history.push([t,d]);
-
-  const source = makeMockCallbag(report, true);
+  const source = makeMockCallbag(true);
   const middle = tap(v => {});
   const sink = makeMockCallbag();
 
@@ -80,10 +77,11 @@ test('it passes requests back up', t => {
   sink.emit(1);
   sink.emit(2);
 
-  t.deepEqual(history, [
-    [1, undefined],
-    [2, undefined],
-  ], 'source gets requests from sink');
+  t.deepEqual(
+    source.getMessages().slice(1),
+    [ [1, undefined], [2, undefined], ],
+    'source gets requests from sink'
+  );
 
   t.end();
 });
