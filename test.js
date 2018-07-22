@@ -12,11 +12,13 @@ test('it taps data with the given operation', t => {
   middle(source)(0, sink);
 
   source.emit(1, 'foo');
+  source.emit(1, null);
+  source.emit(1); // should not be tapped
   source.emit(1, 'bar');
   source.emit(2, 'error');
 
-  t.deepEqual(tapped, ['foo','bar'], 'tap function is called with all data');
-  t.deepEqual(sink.getReceivedData(), ['foo','bar'], 'tap passes data on down');
+  t.deepEqual(tapped, ['foo',null, 'bar'], 'tap function is called with all non-undefined data');
+  t.deepEqual(sink.getReceivedData(), ['foo', null, 'bar'], 'tap passes all data on down');
   t.end();
 });
 
