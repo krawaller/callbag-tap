@@ -87,3 +87,15 @@ test('it passes requests back up', t => {
 
   t.end();
 });
+
+test('it shouldnt throw if no data tapping', t => {
+  const source = makeMockCallbag(true);
+  const middle = tap(undefined, e => {});
+  const sink = makeMockCallbag();
+
+  middle(source)(0, sink);
+  
+  t.doesNotThrow(() => source.emit(1, 'foo'));
+
+  t.end();
+});
