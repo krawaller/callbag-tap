@@ -10,4 +10,4 @@ const tap = (o, e, c) => source => (start, sink) => {
   });
 };
 
-module.exports = tap;
+export default tap;

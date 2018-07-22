@@ -1,6 +1,6 @@
 const test = require('tape');
 const makeMockCallbag = require('callbag-mock');
-const tap = require('./index');
+const tap = require('.');
 
 test('it taps data with the given operation', t => {
   let tapped = [];
@@ -94,7 +94,7 @@ test('it shouldnt throw if no data tapping', t => {
   const sink = makeMockCallbag();
 
   middle(source)(0, sink);
-  
+
   t.doesNotThrow(() => source.emit(1, 'foo'));
 
   t.end();
