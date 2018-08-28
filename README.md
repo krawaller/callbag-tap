@@ -1,9 +1,10 @@
 # callbag-tap
 
-[Callbag](https://github.com/callbag/callbag) operator that taps the source with the given function, but otherwise acts as a noop.
+[Callbag](https://github.com/callbag/callbag) operator that allows you to `tap` data, error and completion. Allows you to inspect and do side effects without disturbing the stream.
 
-Therefore it is not the same as [forEach](https://github.com/staltz/callbag-for-each) which is a sink (that actively consumes sources).
+In contrast to [forEach](https://github.com/staltz/callbag-for-each) which is a sink and actively consumes sources), `tap` does not consume sources.
 
+Install with:
 `npm install callbag-tap`
 
 You can tap data, error and completion respectively:
